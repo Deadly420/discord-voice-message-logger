@@ -34,11 +34,33 @@ It is recommended to use a virtual environment to manage dependencies and avoid 
    python selfbot.py
    ```
 
+## Target Filtering
+To enable targeted logging, configure the following options in `selfbot.py`:
+
+```python
+LOG_TARGETS_ONLY = False  # Set to True to log only specific users/guilds
+TARGET_USER_IDS = [1199251895399759962]  # Add user IDs to log
+TARGET_GUILD_IDS = [509594441883975695]  # Add guild IDs to log
+```
+
+- If `LOG_TARGETS_ONLY` is `True`, only the specified users and guilds will be logged.
+- If `LOG_TARGETS_ONLY` is `False`, logging applies to all users and guilds.
+
 ## Script Overview
 ```python
 import discord
 from discord.ext import commands
 import datetime
+
+# Configuration
+LOG_TARGETS_ONLY = False  # Set to False to log everyone
+TARGET_USER_IDS = [
+    1199251895399759962
+]
+
+TARGET_GUILD_IDS = [
+    509594441883975695
+]
 
 # Terminal colors
 CYAN = "\033[36m"

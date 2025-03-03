@@ -2,6 +2,16 @@ import discord # pip install discord.py-self
 from discord.ext import commands
 import datetime
 
+# Configuration
+LOG_TARGETS_ONLY = False  # Set to False to log everyone
+TARGET_USER_IDS = [
+    1199251895399759962
+]
+
+TARGET_GUILD_IDS = [
+    509594441883975695
+]
+
 # Terminal colors
 CYAN = "\033[36m"
 GREEN = "\033[32m"
@@ -33,6 +43,10 @@ def get_channel_participants(channel):
         return 0
 
 def log_voice_event(action, member, channel, timestamp):
+    # Add target filtering check
+    if LOG_TARGETS_ONLY and (member.id not in TARGET_USER_IDS and member.guild.id not in TARGET_GUILD_IDS):
+        return
+    
     action_colors = {
         "CALL_START": GREEN,
         "CALL_END": RED,
@@ -96,6 +110,10 @@ def log_voice_event(action, member, channel, timestamp):
         print(f"Voice log error: {e}")
 
 def log_message(action, message, timestamp):
+    # Add target filtering check
+    if LOG_TARGETS_ONLY and (message.author.id not in TARGET_USER_IDS and message.guild.id not in TARGET_GUILD_IDS):
+        return
+
     action_colors = {
         "CREATED": GREEN,
         "DELETED": RED,

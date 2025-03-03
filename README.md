@@ -39,7 +39,6 @@ It is recommended to use a virtual environment to manage dependencies and avoid 
 import discord
 from discord.ext import commands
 import datetime
-import time
 
 # Terminal colors
 CYAN = "\033[36m"

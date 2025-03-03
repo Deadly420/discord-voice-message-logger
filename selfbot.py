@@ -2,8 +2,6 @@ import discord # pip install discord.py-self
 from discord.ext import commands
 import datetime
 
-import time
-
 # Terminal colors
 CYAN = "\033[36m"
 GREEN = "\033[32m"

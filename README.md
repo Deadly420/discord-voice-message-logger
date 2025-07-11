@@ -1,122 +1,126 @@
-# Discord.py-Self Logging Bot
 
-A simple self-bot script using `discord.py-self` for logging voice and message events on Discord.
+# 💬 Discord.py Self-Logging Bot
 
-## Features
-- Logs voice events such as user joins, leaves, call starts, and call ends.
-- Logs message events including creation, deletion, and edits.
-- Outputs logs with colored terminal formatting and stores them in text files.
-- Supports logging embeds and attachments in messages.
-- Handles group DMs and direct messages.
-- Lightweight and efficient logging mechanism.
+A powerful self-bot built with `discord.py-self` for logging messages and voice events with colorized terminal output and structured file storage.
 
-## Requirements
+> ⚠️ **Disclaimer**: Self-bots are against [Discord's Terms of Service](https://discord.com/terms). Use at your own risk.
+
+---
+
+## ✅ Features
+
+- 🎙 **Voice Event Logging**:
+  - User joined/left voice channels
+  - Call start/end detection
+  - Mute state changes
+
+- 💬 **Message Logging**:
+  - Created, edited, and deleted messages
+  - Captures attachments and embeds
+  - Resolves mentions and role tags
+
+- 📁 **Log Management**:
+  - Separate folders per guild, group DM, or DM
+  - Auto-rotating log files (500MB max per file)
+  - Clean terminal output with ANSI color codes
+
+- 🧠 **Filtering**:
+  - Option to log only specific users or guilds
+
+---
+
+## 📦 Requirements
+
 - Python 3.8+
-- `discord.py-self` library
+- [`discord.py-self`](https://pypi.org/project/discord.py-self/)
+- `colorama`
 
-## Installation
-It is recommended to use a virtual environment to manage dependencies and avoid conflicts.
+Install dependencies:
+```bash
+pip install discord.py-self colorama
+```
 
-1. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On macOS/Linux
-   venv\Scripts\activate     # On Windows
+---
+
+## 🛠️ Setup & Usage
+
+1. **Clone or copy the script**
+
+2. **Insert your Discord token:**
+   ```python
+   bot.run("YOUR_TOKEN_HERE")
    ```
-2. Install the required library:
-   ```bash
-   pip install discord.py-self
-   ```
-3. Save the provided script as `selfbot.py`.
-4. Insert your Discord token into `bot.run("")`.
-5. Run the script using:
+
+3. **Run the bot:**
    ```bash
    python selfbot.py
    ```
 
-## Target Filtering
-To enable targeted logging, configure the following options in `selfbot.py`:
+---
+
+## 🎯 Target Filtering (Optional)
+
+Inside `selfbot.py`, configure these:
 
 ```python
-LOG_TARGETS_ONLY = False  # Set to True to log only specific users/guilds
-TARGET_USER_IDS = [1199251895399759962]  # Add user IDs to log
-TARGET_GUILD_IDS = [509594441883975695]  # Add guild IDs to log
+LOG_TARGETS_ONLY = True  # Set to True to enable filtering
+
+TARGET_USER_IDS = [123456789012345678]  # User IDs to log
+TARGET_GUILD_IDS = [987654321098765432]  # Guild IDs to log
 ```
 
-- If `LOG_TARGETS_ONLY` is `True`, only the specified users and guilds will be logged.
-- If `LOG_TARGETS_ONLY` is `False`, logging applies to all users and guilds.
+- Set `LOG_TARGETS_ONLY` to `True` to activate the filters.
+- Leave it `False` to log everything.
 
-## Script Overview
-```python
-import discord
-from discord.ext import commands
-import datetime
+---
 
-# Configuration
-LOG_TARGETS_ONLY = False  # Set to False to log everyone
-TARGET_USER_IDS = [
-    1199251895399759962
-]
+## 🗃️ File Structure
 
-TARGET_GUILD_IDS = [
-    509594441883975695
-]
-
-# Terminal colors
-CYAN = "\033[36m"
-GREEN = "\033[32m"
-YELLOW = "\033[33m"
-BLUE = "\033[34m"
-RED = "\033[31m"
-MAGENTA = "\033[35m"
-ORANGE = "\033[38;5;208m"
-RESET = "\033[0m"
-
-bot = commands.Bot(command_prefix="!", self_bot=True)
-
-@bot.event
-async def on_ready():
-    print(f'Logged in as {bot.user} [ID: {bot.user.id}]')
-    print(f'{YELLOW}[INFO]{RESET} Bot is running on Discord.py version {discord.__version__}')
-
-# Voice Logging Functions
-# - Get channel participants
-# - Log voice events
-
-# Message Logging Functions
-# - Log message events (create, delete, edit)
-
-# Event Listeners
-# - on_voice_state_update
-# - on_member_update
-# - on_message
-# - on_message_delete
-# - on_message_edit
-
-bot.run("")  # Insert your Discord token here
+```
+logs/
+├── 509594441883975695/         # Guild ID folder
+│   ├── message_log.txt         # Rolling message logs
+│   └── voice_log.txt           # Rolling voice logs
+├── DM/                         # Direct Messages
+├── group_1234567890/           # Group DMs
 ```
 
-## Usage
-- Run the script:
-  ```bash
-  python selfbot.py
-  ```
-- The bot will log messages and voice events automatically.
+- Files automatically rotate if they exceed 500MB.
 
-## Troubleshooting
-- Ensure you have entered a valid Discord token.
-- If you encounter issues with `discord.py-self`, try reinstalling:
+---
+
+## 🔍 Events Tracked
+
+| Type       | Event                  | Description                          |
+|------------|------------------------|--------------------------------------|
+| Message    | Created, Edited, Deleted | Captures full message content, mentions, embeds, and attachments |
+| Voice      | Joined, Left           | Detects user activity in voice channels |
+| Voice      | Call Start, Call End   | Based on user presence in voice channels |
+| Voice      | Mute Changes           | Tracks mute/unmute state            |
+
+---
+
+## 🧪 Troubleshooting
+
+- ❌ **Token not working?**
+  - Make sure it's a user token, not a bot token. (Again, self-bots violate Discord ToS.)
+
+- 🧼 **Reinstall dependencies**
   ```bash
   pip uninstall discord.py-self
   pip install discord.py-self
   ```
-- Running into permission errors? Make sure your account has necessary access to the channels you want to log.
 
-## Disclaimer
-Using self-bots is against Discord's Terms of Service. Proceed at your own risk.
+- 🛑 **Permission errors?**
+  - Ensure your account has access to the messages or channels you're trying to log.
 
-## License
+---
 
+## 🧾 License
+
+**MIT License**
+
+```
 MIT License
 
 Copyright (c) 2025
@@ -138,4 +142,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
+```
